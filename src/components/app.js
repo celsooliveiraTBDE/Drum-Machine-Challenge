@@ -5,12 +5,17 @@ CHALLENGE 0:
   Once you npm start you should see a gray background. Familiarize yourself with the code inside the "components" directory. We have two components. An app.js file and a button.js file. Look at each of those and think about how we'll need those to interact.
 
 CHALENGE 1:
-  - Now let’s see how all this existing code is working together. First let’s make our App component return one Button component (note: we have access to the Button component because we are importing it at the top of the file). You should see a button appear on the screen! Take another look at the button.js file to see what is being returned from this component. Let's get crazy and add a few more button components to the return statement just to see what happens! ... Ok don't get too crazy. Let’s remove those so we can create them in more efficient manner.
+  - Now let’s see how all this existing code is working together. 
+  First let’s make our App component return one Button component (note: we have access to the Button component because we are importing it at the top of the file). You should see a button appear on the screen! 
+  Take another look at the button.js file to see what is being returned from this component. 
+  Let's get crazy and add a few more button components to the return statement just to see what happens! ... Ok don't get too crazy. Let’s remove those so we can create them in more efficient manner.
 
 CHALLENGE 2:
   - Ok let's get a little fancy here and render an array of Button components.
-  - Notice that we have imported a "Sounds" object at just below. That is an object full of Audio objects that can be played. Don't believe me?! Go ahead and log it to the console. By the time we are finished we will be able to play each of those sounds when we click a specific button, but first we need to create a button for each one of these sound objects.
-  - We have created an array of sound names in our App components state. Iterate over that array and create a Button component for each one (Is this beginning to look familiar yet? hmmm...). If you have done it correctly, you should see 16 blank buttons on your screen.
+  - Notice that we have imported a "Sounds" object at just below. That is an object full of Audio objects that can be played. 
+  Don't believe me?! Go ahead and log it to the console. By the time we are finished we will be able to play each of those sounds when we click a specific button, but first we need to create a button for each one of these sound objects.
+  - We have created an array of sound names in our App components state. 
+  Iterate over that array and create a Button component for each one (Is this beginning to look familiar yet? hmmm...). If you have done it correctly, you should see 16 blank buttons on your screen.
 
   - Ok these buttons look pretty boring. Let’s give them some text. Let's add an attribute called "sound" to all the buttons when they are being created. Let’s make the value of the sound attribute be the values of the names in the "sounds" array that live in state. If you have done it correctly you should now see text in each of the buttons! But wait, how? Take a look in the button.js file, where we defined out Button component to see how it is rendering that data. BOOM! "props" OBJECT FOR THE WIN!
 
@@ -34,12 +39,12 @@ SUPER HARD BONUS CHALLENGE!!!!:
 
 */
 
-import React,   { Component } from 'react';
+import React, { Component } from 'react';
 import Button from './button.js';
 import Sounds from '../assets/sounds.js';
 
 class App extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
       sounds: Object.keys(Sounds)
@@ -48,15 +53,20 @@ class App extends Component {
   }
 
   playSound(eventObj) {
-    //code to be run when click event is fired goes below this line!
-
+    const { id } = eventObj.currentTarget;
+    const soundObj = Sounds[id];
+    soundObj.currentTime = 0;
+    soundObj.play()
   }
 
-  render(){
-
+  render() {
+    const mySounds = this.state.sounds.map(sound => <Button sound={sound} playSound={this.playSound} id={sound} gatos={sound} />)
     return (
       <div className='button-container'>
-      {/* Components that need to be returned from App go below here ! */}
+        {console.log(Sounds)}
+        {mySounds}
+
+
       </div>
     );
   }

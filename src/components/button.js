@@ -7,9 +7,10 @@ class Button extends Component {
       // Add additional attributes here
         className='button'
         onClick={this.props.playSound}
+        id={this.props.sound}
       >
 
-        <p>{this.props.sound}</p>
+        <p>{this.props.gatos}</p>
 
       </div>
     );
